@@ -44,19 +44,29 @@ public class controller {
             return new ResponseEntity<>("Product is deleted successsfully", HttpStatus.OK);
     
     }
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product) {    
-            productRepo.remove(id);
-            product.setId(id);
-            productRepo.put(id, product);
-            return new ResponseEntity<>("Product is updated successsfully", HttpStatus.OK);
-   }
+        @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
+        public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product){
+        if(!productRepo.containsKey(id)){ 
+           return new ResponseEntity<>("There is no product ID", HttpStatus.NOT_FOUND);
+        }
+        else{
+           productRepo.remove(id);
+           product.setId(id);
+           productRepo.put(id, product);
+           return new ResponseEntity<>("Product is updated Successfully", HttpStatus.OK);
+        }
+        }
    
-   @RequestMapping(value = "/products", method = RequestMethod.POST)
-   public ResponseEntity<Object> createProduct(@RequestBody Product product) {
-      productRepo.put(product.getId(), product);
-      return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
-   }
+        @RequestMapping(value = "/products", method = RequestMethod.POST)
+        public ResponseEntity<Object> createProduct(@RequestBody Product product){
+        if (productRepo.containsKey(product.getId())){
+           return new ResponseEntity<>("ID cannot duplicated", HttpStatus.OK);
+        }
+        else{
+           productRepo.put(product.getId(), product);
+           return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
+            }
+        }
    
    @RequestMapping(value = "/products")
    public ResponseEntity<Object> getProduct() {
