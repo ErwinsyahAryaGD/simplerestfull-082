@@ -28,12 +28,16 @@ public class controller {
       Product meja = new Product();
       meja.setId("1");
       meja.setName("meja");
+      meja.setQty("2");
+      meja.setPrice("100000");
       productRepo.put(meja.getId(), meja);
       
-      Product almond = new Product();
-      almond.setId("2");
-      almond.setName("Almond");
-      productRepo.put(almond.getId(), almond);
+      Product kursi = new Product();
+      kursi.setId("2");
+      kursi.setName("Almond");
+      kursi.setQty("3");
+      kursi.setPrice("50000");
+      productRepo.put(kursi.getId(), kursi);
       
       
     }
